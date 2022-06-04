@@ -1,0 +1,72 @@
+type Apetimism @entity {
+  id: Bytes!
+  totalTokens: Int!
+  reservedMintingStartTimestamp: Int!
+  teamMintingStartTimestamp: Int!
+  publicMintingStartTimestamp: Int!
+  mintingEndTimestamp: Int!
+  revealedTimestamp: Int!
+
+  totalOwners: Int!
+  totalTransfers: BigInt!
+}
+
+type TokenOwner @entity(immutable: true) {
+  id: Bytes!
+  owner: Owner!
+  token: Token!
+}
+
+type Token @entity {
+  id: Bytes!
+  tokenId: Int!
+  minter: Bytes!
+  mintedTimestamp: BigInt!
+  mintTxHash: Bytes!
+  owner: Owner!
+  isReserved: Boolean!
+  totalTransfers: BigInt!
+  transferHistory: [Transfer!]! @derivedFrom(field: "token")
+  ownerHistory: [TokenOwner!]! @derivedFrom(field: "token")
+  uriKey: String!
+  metadataIpfsUrl: String!
+  metadataUrl: String!
+}
+
+type TotalMintedChanged @entity(immutable: true) {
+  id: Bytes!
+  timestamp: Int!
+  totalMinted: Int!
+}
+
+type RoundChanged @entity(immutable: true) {
+  id: Bytes!
+  roundType: Int!
+  timestamp: Int!
+
+  blockNumber: BigInt!
+  txHash: Bytes!
+  logIndex: BigInt!
+}
+
+type Owner @entity {
+  id: Bytes!
+  totalTokens: Int!
+  totalTransfers: BigInt!
+  tokens: [Token!]! @derivedFrom(field: "owner")
+  tokenHistory: [TokenOwner!]! @derivedFrom(field: "owner")
+}
+
+type Transfer @entity(immutable: true) {
+  id: Bytes!
+  index: BigInt!
+  token: Token!
+  from: Bytes!
+  to: Bytes!
+  timestamp: BigInt!
+  isMinted: Boolean!
+
+  blockNumber: BigInt!
+  txHash: Bytes!
+  logIndex: BigInt!
+}

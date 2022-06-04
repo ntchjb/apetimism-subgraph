@@ -1,0 +1,62 @@
+
+# Get Owner Stats
+{
+  owners(
+    where: {
+    	id: "0xa2de07816aa0bcf6c47f9b344012f117fca4c4b7"
+  	}
+  ) {
+    totalTokens
+    totalTransfers
+    tokens(first: 10) {
+      tokenId
+      uriKey
+      mintedTimestamp
+    }
+  }
+}
+
+# Get Token Stats
+{
+  tokens(where: {tokenId: 140}) {
+    id
+    tokenId
+    minter
+    mintedTimestamp
+    mintTxHash
+    owner {
+      id
+      totalTokens
+      totalTransfers
+    }
+    isReserved
+    totalTransfers
+    transferHistory(first: 5, orderBy: index, orderDirection: desc) {
+      id
+      index
+      from
+      to
+      timestamp
+      isMinted
+      blockNumber
+      txHash
+      logIndex
+    }
+    uriKey
+  }
+}
+
+# Get Overall Stats
+{
+  apetimism(id: "0x01000000") {
+    totalTokens
+    totalOwners
+    totalTransfers
+    reservedMintingStartTimestamp
+    teamMintingStartTimestamp
+    publicMintingStartTimestamp
+    mintingEndTimestamp
+    revealedTimestamp
+  }
+}
+

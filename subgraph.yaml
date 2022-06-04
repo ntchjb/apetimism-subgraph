@@ -1,0 +1,37 @@
+specVersion: 0.0.4
+description: Apetimism NFT Simple Data Analytics
+repository: https://github.com/ntchjb/apetimism-subgraph
+schema:
+  file: ./schema.graphql
+dataSources:
+  - kind: ethereum
+    name: ApetimismNFT
+    network: optimism
+    source:
+      address: "0x51E5426eDE4e2d4c2586371372313B5782387222"
+      abi: ApetimismNFT
+      startBlock: 10469370
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.5
+      language: wasm/assemblyscript
+      entities:
+        - Apetimism
+        - Token
+        - TotalMintedChanged
+        - RoundChanged
+        - Owner
+        - Transfer
+      abis:
+        - name: ApetimismNFT
+          file: ./abis/ApetimismNFT.json
+      eventHandlers:
+        - event: Revealed()
+          handler: handleRevealed
+        - event: RoundChanged(uint8)
+          handler: handleRoundChanged
+        - event: TotalMintedChanged(uint256)
+          handler: handleTotalMintedChanged
+        - event: Transfer(indexed address,indexed address,indexed uint256)
+          handler: handleTransfer
+      file: ./src/apetimism-nft.ts

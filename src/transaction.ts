@@ -10,6 +10,10 @@ export function getOrCreateTransaction(event: TransferEvent): Transaction {
     tx.totalMints = 0;
     tx.totalTransfers = 0;
     tx.value = event.transaction.value;
+    tx.from = event.transaction.from;
+    tx.to = event.transaction.to!;
+    tx.gasLimit = event.transaction.gasLimit;
+    tx.gasPrice = event.transaction.gasPrice;
   }
 
   return tx;

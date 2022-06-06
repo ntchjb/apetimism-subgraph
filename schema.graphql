@@ -74,6 +74,11 @@ type Transfer @entity(immutable: true) {
 
 type Transaction @entity(immutable: true) {
   id: Bytes!
+  from: Bytes!
+  to: Bytes!
+  gasLimit: BigInt!
+  gasPrice: BigInt!
+
   totalMints: Int!
   totalTransfers: Int!
   value: BigInt!

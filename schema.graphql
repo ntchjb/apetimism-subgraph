@@ -53,6 +53,7 @@ type Owner @entity {
   id: Bytes!
   totalTokens: Int!
   totalTransfers: BigInt!
+  totalMints: Int!
   tokens: [Token!]! @derivedFrom(field: "owner")
   tokenHistory: [TokenOwner!]! @derivedFrom(field: "owner")
 }
@@ -67,6 +68,15 @@ type Transfer @entity(immutable: true) {
   isMinted: Boolean!
 
   blockNumber: BigInt!
-  txHash: Bytes!
+  tx: Transaction!
   logIndex: BigInt!
+}
+
+type Transaction @entity(immutable: true) {
+  id: Bytes!
+  totalMints: Int!
+  totalTransfers: Int!
+  value: BigInt!
+
+  transfers: [Transfer!]! @derivedFrom(field: "tx")
 }

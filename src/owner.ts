@@ -8,6 +8,7 @@ export function getOrCreateOwner(ownerAddress: Address): Owner {
 
     owner.totalTokens = 0;
     owner.totalTransfers = BigInt.zero();
+    owner.totalMints = 0;
   }
 
   return owner;
@@ -23,4 +24,8 @@ export function incrementOwnerTotalTokens(owner: Owner): void {
 
 export function incrementOwnerTotalTransfers(owner: Owner): void {
   owner.totalTransfers = owner.totalTransfers.plus(BigInt.fromI32(1));
+}
+
+export function incrementOwnerTotalMints(owner: Owner):  void {
+  owner.totalMints += 1;
 }
